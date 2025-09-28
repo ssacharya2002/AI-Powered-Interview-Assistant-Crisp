@@ -4,6 +4,7 @@ import { config } from "dotenv";
 
 import extractRoutes from "./routes/extract";
 import generateRoutes from "./routes/generate";
+import scoreRoutes from "./routes/score";
 
 
 config();
@@ -22,7 +23,7 @@ app.get("/api", (req: Request, res: Response) => {
 // routes
 app.use("/api/extract", extractRoutes);
 app.use("/api/interview/next-question", generateRoutes);
-
+app.use("/api/interview/score-answer", scoreRoutes);
 
 // Start server
 app.listen(PORT, () => {
