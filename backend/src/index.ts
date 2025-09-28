@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from "dotenv";
 
 import extractRoutes from "./routes/extract";
+import generateRoutes from "./routes/generate";
 
 
 config();
@@ -20,6 +21,8 @@ app.get("/api", (req: Request, res: Response) => {
 
 // routes
 app.use("/api/extract", extractRoutes);
+app.use("/api/interview/next-question", generateRoutes);
+
 
 // Start server
 app.listen(PORT, () => {
