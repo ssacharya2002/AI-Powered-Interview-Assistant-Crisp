@@ -1,6 +1,4 @@
-import {
-  removeCandidate,
-} from "@/store/features/interviewSlice";
+import { removeCandidate } from "@/store/features/interviewSlice";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useMemo } from "react";
@@ -16,6 +14,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { type RootState } from "@/store/store";
 import { useAppDispatch } from "@/store/hooks";
 import { selectCandidateById } from "@/store/features/selectors";
+import { toast } from "sonner";
+import { openDialog } from "@/store/features/dialogSlice";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 
 function InterviewerCandidatePage() {
   const { id } = useParams();
@@ -70,16 +71,15 @@ function InterviewerCandidatePage() {
   if (!candidate) return null;
 
   const handleDelete = () => {
-    const ok = window.confirm(
-      "Delete this candidate? This action cannot be undone."
-    );
-    if (!ok) return;
     dispatch(removeCandidate({ id: candidate.id }));
+    toast.success("Candidate deleted");
     navigate("/Interviewer");
   };
 
   return (
     <div className="max-w-6xl mx-auto">
+      <ConfirmationDialog />
+
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">
@@ -90,7 +90,19 @@ function InterviewerCandidatePage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="destructive" onClick={handleDelete}>
+          <Button
+            variant="destructive"
+            onClick={() =>
+              dispatch(
+                openDialog({
+                  title: "Delete Candidate",
+                  description:
+                    "Are you sure you want to delete this candidate? This action cannot be undone.",
+                  onConfirm: handleDelete,
+                })
+              )
+            }
+          >
             Delete Candidate
           </Button>
         </div>

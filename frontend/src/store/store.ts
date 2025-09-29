@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import interviewReducer from "./features/interviewSlice";
+import dialogReducer from "./features/dialogSlice";
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
@@ -23,6 +24,7 @@ const persistConfig = {
 //Combine reducers
 const rootReducer = combineReducers({
   interview: interviewReducer,
+  dialog:dialogReducer
 });
 
 
