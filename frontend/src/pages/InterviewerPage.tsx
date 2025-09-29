@@ -1,9 +1,11 @@
+import { CandidatesDashboard } from "@/components/CandidatesDashboard";
+
 
 function InterviewerPage() {
 
   return (
     <div>
-      InterviewerPage
+      <CandidatesDashboard />
     </div>
   );
 }
