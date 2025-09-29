@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import Layout from "./components/Layout";
-import UploadResume from "./pages/UploadResume";
+import UploadResumePage from "./pages/UploadResumePage";
 import InterviewPage from "./pages/InterviewPage";
 import InterviewerPage from "./pages/InterviewerPage";
 import InterviewerCandidatePage from "./pages/InterviewerCandidatePage";
@@ -14,7 +14,7 @@ function App() {
       <div className="pt-20 px-6">
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<UploadResume />} />
+            <Route index element={<UploadResumePage />} />
             <Route path="interview/:id" element={<InterviewPage />} />
           </Route>
 
