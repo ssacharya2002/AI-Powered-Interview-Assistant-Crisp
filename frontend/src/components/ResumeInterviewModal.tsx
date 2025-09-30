@@ -15,7 +15,8 @@ export function ResumeInterviewModal({
     <div className="flex flex-col h-[calc(100vh-90px)] w-full bg-gray-50">
       <div className="flex-1 flex flex-col items-center justify-center p-4">
         <Card className="p-8 max-w-md w-full text-center">
-          <h2 className="text-2xl font-bold mb-4">Resume Interview?</h2>
+          <h2 className="text-2xl font-bold ">Welcome back</h2>
+          <h2 className="font-bold  text-gray-600">Resume Interview?</h2>
           <p className="mb-6 text-gray-600">
             We found an incomplete interview session. Would you like to resume
             where you left off?

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Loader2, UploadCloud } from "lucide-react";
 
-import { createEmptyCandidate } from "@/lib/utils";
+import { createEmptyCandidate, extractTextFromDocx } from "@/lib/utils";
 import { addCandidate } from "@/store/features/interviewSlice";
 import { extractDetailsFromResumeText, extractTextFromPDF } from "@/lib/utils";
 
@@ -16,15 +16,23 @@ function UploadResumePage() {
   const [uploading, setUploading] = useState(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: { "application/pdf": [".pdf"] },
+    accept: {
+      "application/pdf": [".pdf"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docx"],
+    },
     maxFiles: 1,
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
 
       if (!file) return;
 
-      if (file.type !== "application/pdf") {
-        return toast.error("Only PDF files are supported.");
+      if (
+        file.type !== "application/pdf" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        return toast.error("Only PDF and DOCX files are supported.");
       }
 
       if (file.size > 500 * 1024) {
@@ -34,7 +42,17 @@ function UploadResumePage() {
       try {
         setUploading(true);
 
-        const text = await extractTextFromPDF(file);
+        let text = "";
+        if (file.type === "application/pdf") {
+          text = await extractTextFromPDF(file);
+        } else if (
+          file.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ) {
+          text = await extractTextFromDocx(file);
+        } else {
+          return toast.error("Only PDF and DOCX files are supported.");
+        }
         const parsed = await extractDetailsFromResumeText(text);
 
         const candidate = createEmptyCandidate({
@@ -54,6 +72,9 @@ function UploadResumePage() {
         setUploading(false);
       }
     },
+    onDropRejected: () => {
+    toast.error("Only PDF and DOCX files are supported.");
+  },
   });
 
   return (

@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge"
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
+import mammoth from "mammoth";
+
 import { CandidateZ, type Candidate } from "./schemas";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,6 +36,16 @@ export async function extractTextFromPDF(file: File): Promise<string> {
 
   return fullText;
 }
+
+
+// DOCX text extraction logic
+export async function extractTextFromDocx(file: File): Promise<string> {
+  const arrayBuffer = await file.arrayBuffer();
+
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value;
+}
+
 
 
 
