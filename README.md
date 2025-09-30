@@ -74,5 +74,5 @@ VITE_API_URL=http://localhost:3000/api
 
 ## Screenshots
 
-![upload resume ](images/screenshot1.png)
-![details ](images/screenshot2.png)
+![upload resume ](images/Screenshot1.png)
+![details ](images/Screenshot2.png)
