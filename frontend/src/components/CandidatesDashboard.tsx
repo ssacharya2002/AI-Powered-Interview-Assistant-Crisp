@@ -34,11 +34,9 @@ export function CandidatesDashboard() {
     setSorts((prev) => {
       const existing = prev.find((s) => s.field === field);
       if (existing) {
-        existing.order = existing.order === "asc" ? "desc" : "asc";
-        return [...prev.filter((s) => s.field !== field), existing];
-      } else {
-        return [...prev, { field, order: "desc" }];
+        return prev.filter((s) => s.field !== field);
       }
+      return [...prev, { field, order: "desc" }];
     });
   };
 
